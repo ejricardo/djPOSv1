@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDataSourceStorage">
+    <option name="dataSources">
+      <list>
+        <State>
+          <option name="id" value="aec9c785-65d0-41aa-bdde-071022318166" />
+          <option name="name" value="DDL data source" />
+          <option name="urls">
+            <array />
+          </option>
+          <option name="scriptOptions">
+            <map>
+              <entry key="QualifyWithSchema" value="ALWAYS" />
+            </map>
+          </option>
+        </State>
+      </list>
+    </option>
+  </component>
+</project>
