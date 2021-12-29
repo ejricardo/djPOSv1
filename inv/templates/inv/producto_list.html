@@ -1,0 +1,77 @@
+{% extends 'base/base.html' %}
+
+{% block page_content %}
+    <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Listado Producto</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Acciones:</div>
+                                            <a class="dropdown-item" onclick="return abrir_modal('{% url 'inv:producto_new' %}')" href="#"><i class="far fa-calendar-plus"></i>Nuevo </a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    {%  if not obj %}
+                                        <div class="alert alert-info"> No hay Producto </div>
+                                   {% else %}
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <th>SubCategoría</th>
+                                            <th>Codigo</th>
+                                            <th>Codigo de Barras</th>
+                                            <th>Descripción</th>
+                                            <th>Existencias</th>
+                                            <th>Marca</th>
+                                            <th>Unidad de Medida</th>
+                                            <th>Estado</th>
+                                            <th>Fecha Crea.</th>
+                                            <th>Fecha Modif.</th>
+                                            <th class="all">Acciones</th>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in obj %}
+                                            <tr>
+                                                <td>{{ item.subcategoria }}</td>
+                                                <td>{{ item.codigo }}</td>
+                                                <td>{{ item.codigo_barra }}</td>
+                                                <td>{{ item.descripcion }}</td>
+                                                <td>{{ item.existencia }}</td>
+                                                <td>{{ item.marca }}</td>
+                                                <td>{{ item.unidad_medida }}</td>
+                                                <td>{{ item.estado|yesno:"Activo,Inactivo" }}</td>
+                                                <td>{{ item.fecha_crea|date:"d/m/Y H:i:s" }}</td>
+                                                <td>{{ item.fecha_modifica|date:"d/m/Y H:i:s" }}</td>
+                                                <td>
+                                                    <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'inv:producto_edit' item.id %}')" ><i class="far fa-edit"></i></button>
+                                                    <a href="{% url 'inv:producto_inactivar' item.id %}" class="btn btn-danger btn-circle" role="button"><i class="far fa-thumbs-down"></i></a>
+                                                </td>
+                                             </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                  </div>
+                                {%  endif %}
+                            </div>
+                        </div>
+                    </div>
+{% endblock %}
+{% block js_page %}
+<script>
+    $(document).ready(function() {
+        $('.table').DataTable();        ///activar el data table de la tabla
+        });
+</script>
+{% endblock %}

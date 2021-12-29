@@ -1,0 +1,67 @@
+{% extends 'base/base.html' %}
+
+{% block page_content %}
+    <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Listado Unidades de Medida</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Dropdown Header:</div>
+                                            <a class="dropdown-item" href="{% url 'inv:unidadmedida_new' %}"><i class="far fa-calendar-plus"></i>Nueva </a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    {%  if not obj %}
+                                        <div class="alert alert-info"> No hay unidades de medida </div>
+                                   {% else %}
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <th>Id</th>
+                                            <th>Descripción</th>
+                                            <th>Estado</th>
+                                            <th>Fecha Crea.</th>
+                                            <th>Fecha Modif.</th>
+                                            <th class="all">Acciones</th>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in obj %}
+                                            <tr>
+                                                <td>{{  item.id }}</td>
+                                                <td>{{ item.descripcion }}</td>
+                                                <td>{{ item.estado|yesno:"Activo,Inactivo" }}</td>
+                                                <td>{{ item.fecha_crea|date:"d/m/Y H:i:s" }}</td>
+                                                <td>{{ item.fecha_modifica|date:"d/m/Y H:i:s" }}</td>
+                                                <td>
+                                                    <a href="{% url 'inv:unidadmedida_edit' item.id %}" class="btn btn-warning btn-circle" role="button"><i class="far fa-edit"></i></a>
+                                                    <a href="{% url 'inv:unidadmedida_inactivar' item.id %}" class="btn btn-danger btn-circle" role="button"><i class="far fa-thumbs-down"></i></a>
+                                                </td>
+                                             </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                  </div>
+                                {%  endif %}
+                            </div>
+                        </div>
+                    </div>
+{% endblock %}
+{% block js_page %}
+<script>
+    $(document).ready(function() {
+        $('.table').DataTable();        ///activar el data table de la tabla
+        });
+</script>
+{% endblock %}
